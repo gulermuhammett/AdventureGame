@@ -12,9 +12,9 @@ public class Game {
 	public void Login() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Macera Oyununa Hoşgeldiniz!");
-		System.out.println("Oyuna başlamadan önce isminizi giriniz: ");
-		//String playerName = scanner.nextLine();
-		player=new Player("pitman");
+		System.out.print("Oyuna başlamadan önce isminizi giriniz: ");
+		String playerName = scanner.nextLine();
+		player=new Player(playerName);
 		player.SelectCha();
 		Start();
 	}
@@ -39,6 +39,15 @@ public class Game {
 			case 1:
 				location=new SafeHouse(player);
 				break;
+			case 2:
+				location=new Cave(player);
+				break;
+			case 3:
+				location=new Forest(player);
+				break;
+			case 4:
+				location=new River(player);
+				break;
 			case 5:
 				location=new ToolStore(player);
 				break;
@@ -47,7 +56,12 @@ public class Game {
 				location=new SafeHouse(player);
 				break;
 			}
-			
+			if (location.getClass().getName().equals("SafeHouse")) {
+				if (player.getInv().isFirewood() && player.getInv().isFood() && player.getInv().isWater()) {
+					System.out.println("Tebrikler oyunu kazandınız!");
+					break;
+				}
+			}
 			if (!location.GetLocation()) {
 				System.out.println("Oyun Bitti!");
 				break;
